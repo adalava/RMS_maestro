@@ -1,0 +1,55 @@
+<html>
+<script src="{{ url_for('static', filename='jquery-3.6.3.min.js') }}"></script>
+
+<script>
+
+function load_station(id) {
+  url = "/stream/log/";
+  $("#frame").attr("src", url + id);
+  $("#page_banner").text(id);
+}
+
+function load_files() {
+  url = "/files";
+  $("#frame").attr("src", url);
+  $("#page_banner").text("Data Files");
+}
+
+function load_live() {
+  url = "/live";
+  $("#frame").attr("src", url);
+  $("#page_banner").text("Live View");
+}
+
+</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='w3.css') }}">
+
+    <body>
+<!-- Sidebar -->
+<div class="w3-sidebar w3-light-grey w3-bar-block" style="width:25%">
+  <h3 class="w3-bar-item">RMS Maestro</h3>
+
+  {% for id in stations %}
+  <a onclick="load_station(this.innerHTML)" href="#" class="w3-bar-item w3-button fa">{{ id }}</a>
+  {% endfor %}
+
+  <a onclick="load_live()" href="#" class="w3-bar-item w3-button">Live View</a>
+  <a onclick="load_files()" href="#" class="w3-bar-item w3-button">Data Files</a>
+    
+</div>
+
+<!-- Page Content -->
+<div style="margin-left:25%">
+  <div class="w3-container w3-teal">
+    <h1 id="page_banner">RMS Maestro</h1>
+  </div>
+
+  <div id="content" class="w3-container">
+    <iframe id="frame" src="" width="100%" height="90%" frameBorder="0">
+    </iframe>
+  </div>
+  
+</div>
+
+    </body>
+</html>

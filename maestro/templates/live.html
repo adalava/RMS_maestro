@@ -1,0 +1,46 @@
+<html>
+<script src="{{ url_for('static', filename='jquery-3.6.3.min.js') }}"></script>
+
+<script>
+
+var current_live_id = '';
+
+function updateImage() {
+  if (current_live_id == '')
+    return;
+
+  load_live(current_live_id);
+}
+
+function load_live(id) {
+  current_live_id = id
+  url = "/files/" + id + "/" + id + "_live.jpg?" + new Date().getTime();
+  $("#image").attr("src", url);
+}
+
+window.onload = function() {
+  setInterval(updateImage, 5000);
+}       
+
+
+
+</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='w3.css') }}">
+
+    <body>
+
+  {% for id in stations %}
+  <a onclick="load_live(this.innerHTML)" href="#" class="w3-bar-item w3-button fa">{{ id }}</a>
+  <div class="w3-dropdown-content w3-bar-block">
+    <a href="#" class="w3-bar-item w3-button">Link</a>
+    <a href="#" class="w3-bar-item w3-button">Link</a>
+  </div>
+  {% endfor %}
+
+<!-- Page Content -->
+  <div id="content" class="w3-container" style="height:100%; position:absolute">
+    <img id="image" style="max-width: 100%; height: auto;" />
+  </div>
+  
+    </body>
+</html>
